@@ -44,26 +44,5 @@ namespace LearningDot.Controllers
 
 
 
-        [HttpGet("getOnlyById/{id}")]  
-        public IActionResult GetById(int id)
-        {
-            List<GetOnlyByVillageName> villageNames = new List<GetOnlyByVillageName>();
-
-            SqlParameter[] parameters = new SqlParameter[]
-            {
-                  new SqlParameter("@VillageId", id)
-            };
-
-            SqlDataReader sqlDataReader = AdoDateLayerConnction.GetDataReaderFromStoredProcedure("GetVillageById", parameters);
-            while (sqlDataReader.Read())
-            {
-                villageNames.Add(new GetOnlyByVillageName
-                {
-                    VillageName = sqlDataReader.GetString(0)
-                });
-            }
-            return Ok(villageNames);
-        }
-
     }
 }
