@@ -13,23 +13,27 @@ namespace LearningDot.Controllers
         [HttpGet("GetAllVillage")]
         public IActionResult GetAllVillage()
         {
-            List <VillageMaster> villageMasters = new List<VillageMaster> ();
+            List<VillageMaster> villageMasters = new List<VillageMaster>();
             SqlDataReader sqlDataReader = AdoDateLayerConnction.GetDataReaderFromStoredProcedure("GetAllVillageDetails");
             while (sqlDataReader.Read())
             {
+
+                enumGender.Gender gen = (enumGender.Gender)sqlDataReader.GetInt32(3);
                 villageMasters.Add(new VillageMaster
-               {
-                   villageId = sqlDataReader.GetInt32(0),
-                   villageName = sqlDataReader.GetString(1),
-                   TalukName = sqlDataReader.GetString(2)
-               });
+                {
+                    villageId = sqlDataReader.GetInt32(0),
+                    villageName = sqlDataReader.GetString(1),
+                    TalukName = sqlDataReader.GetString(2),
+                    Gender = gen.ToString()
+
+                });
             }
             return Ok(villageMasters);
         }
         [HttpGet("getOnlyByName")]
         public IActionResult getOnlyName()
         {
-            List <GetOnlyByVillageName> villageMasters=new List<GetOnlyByVillageName> ();
+            List<GetOnlyByVillageName> villageMasters = new List<GetOnlyByVillageName>();
             SqlDataReader sqlDataReader = AdoDateLayerConnction.GetDataReaderFromStoredProcedure("GetOnlyName");
             while (sqlDataReader.Read())
             {
@@ -44,7 +48,8 @@ namespace LearningDot.Controllers
 
 
 
-        [HttpGet("getOnlyById/{id}")]  
+
+        [HttpGet("getOnlyById/{id}")]
         public IActionResult GetById(int id)
         {
             List<GetOnlyByVillageName> villageNames = new List<GetOnlyByVillageName>();
@@ -64,6 +69,7 @@ namespace LearningDot.Controllers
             }
             return Ok(villageNames);
         }
+
 
     }
 }
